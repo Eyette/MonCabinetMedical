@@ -94,9 +94,9 @@ class AppointmentController extends Controller
 
         if($request->send_sms == 1){
             Nexmo::message()->send([
-                'to'   => '+213657041993',
-                'from' => '213794616181',
-                'text' => 'You have an appointment on '.$request->rdv_time_date.' at '.$request->rdv_time_start.' at Doctorino'
+                'to'   => '+21629844830',
+                'from' => '+21629844830',
+                'text' => 'You have an appointment on '.$request->rdv_time_date.' at '.$request->rdv_time_start.' at AlloCabinet'
             ]);
         }
 
