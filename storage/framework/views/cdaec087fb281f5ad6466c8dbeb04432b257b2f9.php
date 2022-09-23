@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <!-- CSRF Token -->
       <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
-      <title>Doctorino - Login</title>
+      <title>Allo Cabinet - Login</title>
       <!-- Custom styles for this template-->
     <link href="<?php echo e(asset('dashboard/css/sb-admin-2.min.css')); ?>" rel="stylesheet">
    </head>

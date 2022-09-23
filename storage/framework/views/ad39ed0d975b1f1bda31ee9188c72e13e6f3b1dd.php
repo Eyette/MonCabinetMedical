@@ -8,7 +8,7 @@
       <meta name="author" content="">
       <!-- CSRF Token -->
       <meta name="csrf-token" content="zXbiSv6MysbCo84DXZ4JSrdGP6dkFJbqvwo0wgSS">
-      <title>Doctorino - <?php echo e(__('sentence.View Prescription')); ?> 
+      <title>Allo Cabinet - <?php echo e(__('sentence.View Prescription')); ?> 
       </title>
       <!-- Custom styles for this template-->
       <link href="<?php echo e(asset('css/app.css')); ?>" rel="stylesheet">
@@ -35,7 +35,7 @@
 
                                     </div>
                                     <div class="col-md-3">
-                                       <p class="float-right">Alger, <?php echo e(__('sentence.On')); ?> <?php echo e($prescription->created_at->format('d-m-Y')); ?></p>
+                                       <p class="float-right">Tunis, <?php echo e(__('sentence.On')); ?> <?php echo e($prescription->created_at->format('d-m-Y')); ?></p>
                                     </div>
                                  </div>
                                  <!-- END ROW : Doctor informations -->
@@ -106,4 +106,4 @@
          <!-- End of Page Wrapper -->
       </div>
    </body>
-</html><?php /**PATH C:\xampp\htdocs\doctorino\v2\resources\views/prescription/pdf_view.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\Users\Eyette\Documents\Mes projets\MonCabinetMedical\resources\views/prescription/pdf_view.blade.php ENDPATH**/ ?>

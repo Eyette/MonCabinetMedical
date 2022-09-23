@@ -8,7 +8,7 @@
       <meta name="author" content="">
       <!-- CSRF Token -->
       <meta name="csrf-token" content="zXbiSv6MysbCo84DXZ4JSrdGP6dkFJbqvwo0wgSS">
-      <title>Doctorino - {{ __('sentence.View Prescription') }} 
+      <title>Allo Cabinet - {{ __('sentence.View Prescription') }} 
       </title>
       <!-- Custom styles for this template-->
       <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -34,7 +34,7 @@
                                        {!! clean(App\Setting::get_option('header_left')) !!}
                                     </div>
                                     <div class="col-md-3">
-                                       <p class="float-right">Alger, {{ __('sentence.On') }} {{ $prescription->created_at->format('d-m-Y') }}</p>
+                                       <p class="float-right">Tunis, {{ __('sentence.On') }} {{ $prescription->created_at->format('d-m-Y') }}</p>
                                     </div>
                                  </div>
                                  <!-- END ROW : Doctor informations -->

@@ -9,7 +9,7 @@
       <!-- CSRF Token -->
       <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
       <link rel="icon" type="image/png" href="<?php echo e(asset('img/favicon.png')); ?>">
-      <title>Doctorino - <?php echo $__env->yieldContent('title'); ?> </title>
+      <title>Allo Cabinet - <?php echo $__env->yieldContent('title'); ?> </title>
       <!-- Custom styles for this template-->
     <!-- Custom fonts for this template-->
     <link href="<?php echo e(asset('dashboard/vendor/fontawesome-free/css/all.min.css')); ?>" rel="stylesheet" type="text/css">
@@ -38,16 +38,19 @@
                   <div class="sidebar-brand-icon rotate-n-15">
                      <i class="fas fa-user-md"></i>
                   </div>
-                  <div class="sidebar-brand-text mx-3">Doctorino <sup>3.0</sup></div>
+                  <div class="sidebar-brand-text mx-3">Allo Cabinet</div>
                </a>
                <!-- Divider -->
                <hr class="sidebar-divider my-0">
                <!-- Nav Item - Dashboard -->
+               <?php if(auth()->user()->isDoctor): ?>
                <li class="nav-item active">
                   <a class="nav-link" href="<?php echo e(route('home')); ?>">
                   <i class="fas fa-fw fa-tachometer-alt"></i>
                   <span><?php echo e(__('sentence.Dashboard')); ?></span></a>
                </li>
+               <?php endif; ?>
+               <?php if(auth()->user()->isSecretary || auth()->user()->isDoctor  || auth()->user()->isPatient): ?>
                <!-- Divider -->
                <hr class="sidebar-divider">
                <!-- Heading -->
@@ -63,11 +66,20 @@
                   </a>
                   <div id="collapsePatient" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                      <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="<?php echo e(route('patient.create')); ?>"><?php echo e(__('sentence.New Patient')); ?></a>
+                        <?php if(auth()->user()->isSecretary || auth()->user()->isDoctor): ?>
+                         <a class="collapse-item" href="<?php echo e(route('patient.create')); ?>"><?php echo e(__('sentence.New Patient')); ?></a>
+                     
                         <a class="collapse-item" href="<?php echo e(route('patient.all')); ?>"><?php echo e(__('sentence.All Patients')); ?></a>
+
+                        <?php endif; ?>
+                        <?php if(auth()->user()->isPatient): ?>
+                        <a class="collapse-item" href="<?php echo e(route('patient.view',auth()->user()->id)); ?>"> Mon Profile</a>
+                        <?php endif; ?>
                      </div>
                   </div>
                </li>
+               <?php endif; ?>
+               <?php if(auth()->user()->isSecretary || auth()->user()->isDoctor  || auth()->user()->isPatient): ?>
                <!-- Divider -->
                <hr class="sidebar-divider">
                <!-- Heading -->
@@ -75,6 +87,7 @@
                   <?php echo e(__('sentence.Appointment')); ?>
 
                </div>
+           
                <!-- Nav Item - Pages Collapse Menu -->
                <li class="nav-item">
                   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAppointment" aria-expanded="true" aria-controls="collapseAppointment">
@@ -84,11 +97,13 @@
                   <div id="collapseAppointment" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                      <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="<?php echo e(route('appointment.create')); ?>"><?php echo e(__('sentence.New Appointment')); ?></a>
-                        <a class="collapse-item" href="<?php echo e(route('appointment.pending')); ?>"><?php echo e(__('sentence.Pending Appointments')); ?></a>
-                        <a class="collapse-item" href="<?php echo e(route('appointment.all')); ?>"><?php echo e(__('sentence.All Appointments')); ?></a>
+                       <!-- <a class="collapse-item" href="<?php echo e(route('appointment.pending')); ?>"><?php echo e(__('sentence.Pending Appointments')); ?></a>-->
+                        <a class="collapse-item" href="<?php echo e(route('appointment.all')); ?>"> <?php if(auth()->user()->isPatient): ?>   Mes Rendez-vous   <?php else: ?> <?php echo e(__('sentence.All Appointments')); ?> <?php endif; ?></a>
                      </div>
                   </div>
                </li>
+               <?php endif; ?>
+               <?php if(auth()->user()->isDoctor): ?>
                <!-- Divider -->
                <hr class="sidebar-divider">
                <!-- Heading -->
@@ -96,6 +111,7 @@
                   <?php echo e(__('sentence.Prescriptions')); ?>
 
                </div>
+            
                <!-- Nav Item - Pages Collapse Menu -->
                <li class="nav-item">
                   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -109,6 +125,7 @@
                      </div>
                   </div>
                </li>
+            
                <!-- Nav Item - Pages Collapse Menu -->
                <li class="nav-item">
                   <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
@@ -122,19 +139,11 @@
                      </div>
                   </div>
                </li>
-               <!-- Nav Item - Pages Collapse Menu -->
-               <li class="nav-item">
-                  <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTests" aria-expanded="true" aria-controls="collapseTests">
-                  <i class="fas fa-fw fa-heartbeat"></i>
-                  <span><?php echo e(__('sentence.Tests')); ?></span>
-                  </a>
-                  <div id="collapseTests" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="<?php echo e(route('test.create')); ?>"><?php echo e(__('sentence.Add Test')); ?></a>
-                        <a class="collapse-item" href="<?php echo e(route('test.all')); ?>"><?php echo e(__('sentence.All Tests')); ?></a>
-                     </div>
-                  </div>
-               </li>
+              
+              
+              
+                <?php endif; ?>
+               <?php if(auth()->user()->isSecretary || auth()->user()->isPatient): ?>
                <!-- Divider -->
                <hr class="sidebar-divider">
                <!-- Heading -->
@@ -142,6 +151,7 @@
                   <?php echo e(__('sentence.Billing')); ?>
 
                </div>
+        
                <!-- Nav Item - Utilities Collapse Menu -->
                <li class="nav-item">
                   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
@@ -150,11 +160,15 @@
                   </a>
                   <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                      <div class="bg-white py-2 collapse-inner rounded">
+                     <?php if(!auth()->user()->isPatient): ?>
                         <a class="collapse-item" href="<?php echo e(route('billing.create')); ?>"><?php echo e(__('sentence.Create Invoice')); ?></a>
-                        <a class="collapse-item" href="<?php echo e(route('billing.all')); ?>"><?php echo e(__('sentence.Billing List')); ?></a>
+                       <?php endif; ?>
+                        <a class="collapse-item" href="<?php echo e(route('billing.all')); ?>">  <?php if(!auth()->user()->isPatient): ?><?php echo e(__('sentence.Billing List')); ?><?php else: ?> Mes factures <?php endif; ?></a>
                      </div>
                   </div>
                </li>
+                <?php endif; ?>
+                <?php if(auth()->user()->isDoctor): ?>
                <!-- Divider -->
                <hr class="sidebar-divider">
                <!-- Heading -->
@@ -162,6 +176,7 @@
                   <?php echo e(__('sentence.Settings')); ?>
 
                </div>
+           
                <!-- Nav Item - Pages Collapse Menu -->
                <li class="nav-item">
                   <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseSettings" aria-expanded="true" aria-controls="collapseSettings">
@@ -170,9 +185,9 @@
                   </a>
                   <div id="collapseSettings" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                      <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="<?php echo e(route('doctorino_settings.edit')); ?>"><?php echo e(__('sentence.Doctorino Settings')); ?></a>
-                        <a class="collapse-item" href="<?php echo e(route('prescription_settings.edit')); ?>"><?php echo e(__('sentence.Prescription Settings')); ?></a>
-                        <a class="collapse-item" href="<?php echo e(route('sms_settings.edit')); ?>"><?php echo e(__('sentence.SMS Gateway Setup')); ?></a>
+                        <a class="collapse-item" href="<?php echo e(route('settings.edit')); ?>">Horaire de travail</a>
+                        <!--<a class="collapse-item" href="<?php echo e(route('prescription_settings.edit')); ?>"><?php echo e(__('sentence.Prescription Settings')); ?></a>
+                         <a class="collapse-item" href="<?php echo e(route('sms_settings.edit')); ?>"><?php echo e(__('sentence.SMS Gateway Setup')); ?></a> -->  
                      </div>
                   </div>
                </li>
@@ -182,6 +197,7 @@
                <div class="text-center d-none d-md-inline">
                   <button class="rounded-circle border-0" id="sidebarToggle"></button>
                </div>
+               <?php endif; ?>
             </ul>
             <!-- End of Sidebar -->
             <!-- Content Wrapper -->
@@ -194,18 +210,7 @@
                      <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                      <i class="fa fa-bars"></i>
                      </button>
-                     <div class="dropdown shortcut-menu mr-4">
-                       <button type="button" class="btn btn-primary brd-20 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                         Create as new</button>
-                       <div class="dropdown-menu shadow">
-                              <a class="dropdown-item" href="<?php echo e(route('prescription.create')); ?>">Prescription</a>
-                              <a class="dropdown-item" href="<?php echo e(route('patient.create')); ?>">Patient</a>
-                              <a class="dropdown-item" href="<?php echo e(route('appointment.create')); ?>">Appointment</a>
-                              <a class="dropdown-item" href="<?php echo e(route('billing.create')); ?>">Invoice</a>
-                              <a class="dropdown-item" href="<?php echo e(route('drug.create')); ?>">Drug</a>
-                              <a class="dropdown-item" href="<?php echo e(route('test.create')); ?>">Diagnosis Test</a>
-                       </div>
-                     </div>
+                    
                      <!-- Topbar Navbar -->
                      <ul class="navbar-nav ml-auto">
                         <!-- Nav Item - User Information -->
@@ -216,7 +221,7 @@
                            </a>
                            <!-- Dropdown - User Information -->
                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                              <a class="dropdown-item" href="<?php echo e(route('doctorino_settings.edit')); ?>">
+                              <a class="dropdown-item" href="<?php echo e(route('settings.edit')); ?>">
                               <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                               <?php echo e(__('sentence.Settings')); ?>
 
@@ -258,9 +263,8 @@
                <footer class="sticky-footer bg-white">
                   <div class="container my-auto">
                      <div class="copyright my-auto">
-                        <span>Copyright &copy; Created by <a href="https://getdoctorino.papasimo.online/"> Digit94Team</a> <?php echo e(date('Y')); ?></span>
-                        <span style="float: right;">Version 2.0</span>
-                     </div>
+                        <span>Copyright &copy;   <?php echo e(date('Y')); ?></span>
+                      </div>
                   </div>
                </footer>
                <!-- End of Footer -->

@@ -2,26 +2,9 @@
 <?php echo e(__('sentence.View Prescription')); ?>
 
 <?php $__env->stopSection(); ?>
-<?php $__env->startSection('content'); ?>
-<div class="row">
-   <div class="col">
-      <?php if($errors->any()): ?>
-      <div class="alert alert-danger">
-         <ul>
-            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <li><?php echo e($error); ?></li>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-         </ul>
-      </div>
-      <?php endif; ?>
-      <?php if(session('success')): ?>
-      <div class="alert alert-success">
-         <?php echo e(session('success')); ?>
 
-      </div>
-      <?php endif; ?>
-   </div>
-</div>
+<?php $__env->startSection('content'); ?>
+
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800"></h1>
             <a href="<?php echo e(url('prescription/pdf/'.$prescription->id)); ?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-print fa-sm text-white-50"></i> Print</a>
@@ -37,7 +20,7 @@
 
                </div>
                <div class="col-md-3">
-                  <p>Alger, <?php echo e(__('sentence.On')); ?> <?php echo e($prescription->created_at->format('d-m-Y')); ?></p>
+                  <p>Tunis, <?php echo e(__('sentence.On')); ?> <?php echo e($prescription->created_at->format('d-m-Y')); ?></p>
                </div>
             </div>
             <!-- END ROW : Doctor informations -->
@@ -127,4 +110,4 @@
 <?php $__env->stopSection(); ?>
 
 
-<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\doctorino\v2\resources\views/prescription/view.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Eyette\Documents\Mes projets\MonCabinetMedical\resources\views/prescription/view.blade.php ENDPATH**/ ?>

@@ -34,12 +34,12 @@
 
                <div class="form-group">
                   <label for="DepositedAmount">Deposited Amount</label>
-                  <input class="form-control" type="number" name="deposited_amount" id="DepositedAmount">
+                  <input class="form-control" type="text" name="deposited_amount" id="DepositedAmount">
                </div>
 
                <div class="form-group">
                   <label for="DueAmount">Due Amount</label>
-                  <input class="form-control" type="number" name="due_amount" id="DueAmount">
+                  <input class="form-control" type="text" name="due_amount" id="DueAmount">
                </div>
 
 

@@ -108,6 +108,19 @@ class PatientController extends Controller
     }
 
 
+	public function delete($id)
+	{
+
+		User::where('id',$id)->delete();
+       	Prescription::where('user_id' ,$id)->delete();
+        Appointment::where('user_id' ,$id)->delete();
+     	Document::where('user_id' ,$id)->delete();
+ 		Billing::where('user_id' ,$id)->delete();
+ 		History::where('user_id' ,$id)->delete();
+
+	return Redirect::route('patient.all')->with('success', __('sentence.Patient Deleted Successfully'));
+
+	}
     public function view($id){
 
     	$patient = User::findOrfail($id);

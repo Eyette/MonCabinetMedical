@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-{{ __('sentence.Doctorino Settings') }}
+{{ __('sentence.Allo Cabinet Settings') }}
 @endsection
 
 @section('content')

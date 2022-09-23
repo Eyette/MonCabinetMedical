@@ -74,7 +74,7 @@ return [
   'Test Edited Successfully' => 'Test Edited Successfully!',
 
   'Settings' => 'Settings',
-  'Doctorino Settings' => 'Doctorino Settings',
+  'Allo Cabinet Settings' => 'Allo Cabinet Settings',
   'Prescription Settings' => 'Prescription Settings',
   'Search for' => 'Search for',
   'Notifications' => 'Notifications',
@@ -201,6 +201,6 @@ return [
     'Update Invoice' => 'Update Invoice',
     'Add Item' => 'Add Item',
     'SMS Gateway Setup' => 'SMS Gateway Setup',
-    'NEXMO_KEY' => 'Nexmo Key',
-    'NEXMO_SECRET' => 'Nexmo Secret'
+    'NEXMO_KEY' => 'Vonage Key',
+    'NEXMO_SECRET' => 'Vonage Secret'
 ];

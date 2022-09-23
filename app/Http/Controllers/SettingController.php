@@ -23,13 +23,13 @@ class SettingController extends Controller
     }
 
     
-    public function doctorino_settings(Request $request){
+    public function settings(Request $request){
     	$settings = Setting::all();
         $language = ['fr' => 'French', 'en' => 'English', 'es' => 'Spanish', 'de' => 'German', 'bn' => 'Bengali'];
-    	return view('settings.doctorino_settings', ['settings' => $settings, 'language' => $language]);
+    	return view('settings.index', ['settings' => $settings, 'language' => $language]);
     }
 
-    public function doctorino_settings_store(Request $request){
+    public function settings_store(Request $request){
 
     	 $validatedData = $request->validate([
         	'system_name' => 'required',
@@ -41,16 +41,16 @@ class SettingController extends Controller
             'appointment_interval' => 'required',
     	]);
 
-	    	Setting::update_option('system_name', $request->system_name);
-	    	Setting::update_option('title', $request->title);
-	    	Setting::update_option('address', $request->address);
-	    	Setting::update_option('phone', $request->phone);
-	    	Setting::update_option('hospital_email', $request->hospital_email);
-            Setting::update_option('currency', $request->currency);
-            Setting::update_option('vat', $request->vat);
-            Setting::update_option('language', $request->language);
+	    	// Setting::update_option('system_name', $request->system_name);
+	    	// Setting::update_option('title', $request->title);
+	    	// Setting::update_option('address', $request->address);
+	    	// Setting::update_option('phone', $request->phone);
+	    	// Setting::update_option('hospital_email', $request->hospital_email);
+            // Setting::update_option('currency', $request->currency);
+            // Setting::update_option('vat', $request->vat);
+            // Setting::update_option('language', $request->language ?? 'fr');
 
-            Setting::update_option('appointment_interval', $request->appointment_interval);
+            // Setting::update_option('appointment_interval', $request->appointment_interval);
 
             Setting::update_option('saturday_from', $request->saturday_from);
             Setting::update_option('saturday_to', $request->saturday_to);
@@ -75,7 +75,7 @@ class SettingController extends Controller
 
 
 
-    	return Redirect::route('doctorino_settings.edit')->with('success', __("sentence.Settings edited Successfully") );
+    	return Redirect::route('settings.edit')->with('success', __("sentence.Settings edited Successfully") );
     }
 
     public function prescription_settings(){

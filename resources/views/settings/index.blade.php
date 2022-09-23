@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-{{ __('sentence.Doctorino Settings') }}
+{{ __('sentence.Allo Cabinet Settings') }}
 @endsection
 
 @section('content')
@@ -10,10 +10,11 @@
    <div class="col-md-8">
       <div class="card shadow mb-4">
          <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">{{ __('sentence.Doctorino Settings') }}</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Horaire de travail</h6>
          </div>
          <div class="card-body">
-            <form method="post" action="{{ route('doctorino_settings.store') }}">
+            <form method="post" action="{{ route('settings.store') }}">
+            @if(false)
                <div class="form-group row">
                   <label for="system_name" class="col-sm-3 col-form-label">{{ __('sentence.System Name') }} </label>
                   <div class="col-sm-9">
@@ -21,6 +22,7 @@
                      {{ csrf_field() }}
                   </div>
                </div>
+              
                <div class="form-group row">
                   <label for="Title" class="col-sm-3 col-form-label">{{ __('sentence.Title') }}</label>
                   <div class="col-sm-9">
@@ -57,6 +59,7 @@
                      <input type="number" class="form-control" id="Currency" name="vat" value="{{ App\Setting::get_option('vat') }}" required>
                   </div>
                </div>
+               
                <div class="form-group row">
                   <label for="Language" class="col-sm-3 col-form-label">{{ __('sentence.Language') }}</label>
                   <div class="col-sm-9">
@@ -70,6 +73,7 @@
                      </select>
                   </div>
                </div>
+             
                <hr>
                <div class="form-group row">
                   <label for="appointment_interval" class="col-sm-3 col-form-label">{{ __('sentence.Appointment Interval') }}</label>
@@ -91,6 +95,7 @@
                      <small id="emailHelp" class="form-text text-muted">{{ __('sentence.Modifying the interval will distort the dates of the appointments') }}</small>
                   </div>
                </div>
+               @endif
                <div class="form-group row">
                   <label for="Saturday" class="col-sm-4 col-md-3 col-form-label">{{ __('sentence.Saturday') }}</label>
                   <div class="col-sm-4 col-md-4" >
@@ -100,6 +105,7 @@
                      <input type="time" class="form-control" id="Saturday" name="saturday_to" value="{{ App\Setting::get_option('saturday_to') }}">
                   </div>
                </div>
+
                <div class="form-group row">
                   <label for="Sunday" class="col-sm-4 col-md-3 col-form-label">{{ __('sentence.Sunday') }}</label>
                   <div class="col-sm-4 col-md-4" >

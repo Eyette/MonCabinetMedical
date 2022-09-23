@@ -17,7 +17,7 @@ return [
   'Add Test' => 'পরীক্ষা যোগ করুন',
   'All Tests' => 'সমস্ত টেস্ট',
   'Settings' => 'সেটিংস',
-  'Doctorino Settings' => 'Doctorino সেটিংস',
+  'Allo Cabinet Settings' => 'Allo Cabinet সেটিংস',
   'Prescription Settings' => 'প্রেসক্রিপশন পরামিতি',
   'Search for' => 'গবেষণা',
   'Notifications' => 'বিজ্ঞপ্তি',

@@ -44,25 +44,30 @@
                     </div>
                     <div class="col-md-8 col-sm-6">
                       <ul class="nav nav-tabs" id="myTab" role="tablist">
+                      <?php if(!auth()->user()->isPatient): ?>
                         <li class="nav-item" role="presentation">
-                          <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="Profile" aria-selected="true"><?php echo e(__('sentence.Health History')); ?></a>
+                          <a class="nav-link <?php echo e(auth()->user()->isPatient ? '' : 'active'); ?>" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="Profile" aria-selected="true"><?php echo e(__('sentence.Health History')); ?></a>
                         </li>
                         <li class="nav-item" role="presentation">
                           <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false">Medical Files</a>
                         </li>
+                        <?php endif; ?>
                         <li class="nav-item" role="presentation">
-                          <a class="nav-link" id="appointements-tab" data-toggle="tab" href="#appointements" role="tab" aria-controls="appointements" aria-selected="false"><?php echo e(__('sentence.Appointments')); ?></a>
+                          <a class="nav-link <?php echo e(!auth()->user()->isPatient ? '' : 'active'); ?>" id="appointements-tab" data-toggle="tab" href="#appointements" role="tab" aria-controls="appointements" aria-selected="false"><?php echo e(__('sentence.Appointments')); ?></a>
                         </li>
+                        <?php if(!auth()->user()->isPatient): ?>
                         <li class="nav-item" role="presentation">
                           <a class="nav-link" id="prescriptions-tab" data-toggle="tab" href="#prescriptions" role="tab" aria-controls="prescriptions" aria-selected="false"><?php echo e(__('sentence.Prescriptions')); ?></a>
                         </li>
-                        
+                        <?php endif; ?>
+
                         <li class="nav-item" role="presentation">
                           <a class="nav-link" id="Billing-tab" data-toggle="tab" href="#Billing" role="tab" aria-controls="Billing" aria-selected="false"><?php echo e(__('sentence.Payment History')); ?></a>
                         </li>
                       </ul>
                       <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                      <?php if(!auth()->user()->isPatient): ?>
+                        <div class="tab-pane fade  <?php echo e(auth()->user()->isPatient ? '' : 'show active'); ?>" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                           <div class="row">
                             <div class="col">
@@ -85,7 +90,9 @@
 
                           
                         </div>
-                        <div class="tab-pane fade" id="appointements" role="tabpanel" aria-labelledby="appointements-tab">
+                        <?php endif; ?>
+                        <?php if(auth()->user()->isPatient): ?>
+                        <div class="tab-pane fade  <?php echo e(!auth()->user()->isPatient ? '' : 'show active'); ?>" id="appointements" role="tabpanel" aria-labelledby="appointements-tab">
                           <div class="row">
                             <div class="col">
                                 <button type="button" class="btn btn-primary btn-sm my-4 float-right" data-toggle="modal" data-target="#NewDocumentModel"><i class="fa fa-plus"></i> <?php echo e(__('sentence.New Appointment')); ?></button>
@@ -97,7 +104,9 @@
                               <td align="center"><?php echo e(__('sentence.Date')); ?></td>
                               <td align="center"><?php echo e(__('sentence.Time Slot')); ?></td>
                               <td align="center"><?php echo e(__('sentence.Status')); ?></td>
+                              <?php if(!auth()->user()->isPatient): ?>
                               <td align="center"><?php echo e(__('sentence.Actions')); ?></td>
+                              <?php endif; ?>
                             </tr>
                             <?php $__empty_1 = true; $__currentLoopData = $appointments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $appointment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
@@ -122,10 +131,12 @@
                                   </label>
                                 <?php endif; ?>
                               </td>
+                              <?php if(!auth()->user()->isPatient): ?>
                               <td align="center">
                                 <a data-rdv_id="<?php echo e($appointment->id); ?>" data-rdv_date="<?php echo e($appointment->date->format('d M Y')); ?>" data-rdv_time_start="<?php echo e($appointment->time_start); ?>" data-rdv_time_end="<?php echo e($appointment->time_end); ?>" data-patient_name="<?php echo e($appointment->User->name); ?>" class="btn btn-outline-success btn-circle btn-sm" data-toggle="modal" data-target="#EDITRDVModal"><i class="fas fa-check"></i></a>
                                 <a href="<?php echo e(url('appointment/delete/'.$appointment->id)); ?>" class="btn btn-outline-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
                               </td>
+                              <?php endif; ?>
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr>
@@ -134,7 +145,8 @@
                             <?php endif; ?>
                           </table>
                         </div>
-
+                        <?php endif; ?>
+                         <?php if(!auth()->user()->isPatient): ?>
                         <div class="tab-pane fade" id="prescriptions" role="tabpanel" aria-labelledby="prescriptions-tab">
                           <div class="row">
                             <div class="col">
@@ -195,6 +207,7 @@
                                   <h5 class="card-title"><?php echo e($document->title); ?></h5>
                                   <p class="font-size-12"><?php echo e($document->note); ?></p>
                                   <p class="font-size-11"><label class="badge badge-primary-soft"><?php echo e($document->created_at); ?></label></p>
+
                                   <a href="<?php echo e(url('/uploads/'.$document->file)); ?>" class="btn btn-primary btn-sm" download><i class="fa fa-cloud-download-alt"></i> Download</a>
                                   <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#DeleteModal" data-link="<?php echo e(url('document/delete/'.$document->id)); ?>"><i class="fa fa-trash"></i></a>
                                 </div>
@@ -209,7 +222,7 @@
 
                             </div>
                         </div>
-
+                        <?php endif; ?>
 
                         <div class="tab-pane fade" id="Billing" role="tabpanel" aria-labelledby="Billing-tab">
                           <div class="row mt-4">
@@ -242,9 +255,11 @@
                             </div>
                           </div>
                           <div class="row">
+                          <?php if(!auth()->user()->isPatient): ?>
                             <div class="col">
                                 <a type="button" class="btn btn-primary btn-sm my-4 float-right" href="<?php echo e(route('billing.create')); ?>"><i class="fa fa-plus"></i> <?php echo e(__('sentence.Create Invoice')); ?></a>
                             </div>
+                            <?php endif; ?>
                           </div>
                           <table class="table">
                             <tr>
@@ -256,6 +271,7 @@
                             </tr>
                             <?php $__empty_1 = true; $__currentLoopData = $invoices; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $invoice): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr>
+                              
                               <td><a href="<?php echo e(url('billing/view/'.$invoice->id)); ?>"><?php echo e($invoice->reference); ?></a></td>
                               <td><label class="badge badge-primary-soft"><?php echo e($invoice->created_at->format('d M Y')); ?></label></td>
                               <td> <?php echo e($invoice->total_with_tax); ?> <?php echo e(App\Setting::get_option('currency')); ?>
@@ -286,9 +302,10 @@
                               </td>
                               <td>
                                 <a href="<?php echo e(url('billing/view/'.$invoice->id)); ?>" class="btn btn-outline-success btn-circle btn-sm"><i class="fa fa-eye"></i></a>
-                                <a href="<?php echo e(url('billing/pdf/'.$invoice->id)); ?>" class="btn btn-outline-primary btn-circle btn-sm"><i class="fas fa-print"></i></a>
+                                 <?php if(!auth()->user()->isPatient): ?>
                                 <a href="<?php echo e(url('billing/edit/'.$invoice->id)); ?>" class="btn btn-outline-warning btn-circle btn-sm"><i class="fas fa-pen"></i></a>
                                 <a href="<?php echo e(url('billing/delete/'.$invoice->id)); ?>" class="btn btn-outline-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
+                                <?php endif; ?>
                               </td>
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>

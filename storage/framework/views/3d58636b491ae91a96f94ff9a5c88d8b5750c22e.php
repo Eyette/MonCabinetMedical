@@ -27,7 +27,6 @@
                       <th class="text-center"><?php echo e(__('sentence.Phone')); ?></th>
                       <th class="text-center"><?php echo e(__('sentence.Blood Group')); ?></th>
                       <th class="text-center"><?php echo e(__('sentence.Date')); ?></th>
-                      <th class="text-center"><?php echo e(__('sentence.Prescriptions')); ?></th>
                       <th class="text-center"><?php echo e(__('sentence.Actions')); ?></th>
                     </tr>
                   </thead>
@@ -40,11 +39,10 @@
                       <td class="text-center"> <?php echo e($patient->Patient->phone); ?> </td>
                       <td class="text-center"> <?php echo e($patient->Patient->blood); ?> </td>
                       <td class="text-center"><label class="badge badge-primary-soft"><?php echo e($patient->created_at->format('d M Y H:i')); ?></label></td>
-                      <td class="text-center"><a href="#" class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> View</a></td>
                       <td class="text-center">
                         <a href="<?php echo e(url('patient/view/'.$patient->id)); ?>" class="btn btn-outline-success btn-circle btn-sm"><i class="fa fa-eye"></i></a>
                         <a href="<?php echo e(url('patient/edit/'.$patient->id)); ?>" class="btn btn-outline-warning btn-circle btn-sm"><i class="fa fa-pen"></i></a>
-                        <a href="#" class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal" data-target="#DeleteModal" data-link="#"><i class="fas fa-trash"></i></a>
+                        <a href="#" data-link="<?php echo e(route('patient.delete',$patient->id)); ?>" class="btn btn-outline-danger btn-circle btn-sm" data-toggle="modal" data-target="#DeleteModal" data-link="#"><i class="fas fa-trash"></i></a>
                       </td>
                     </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

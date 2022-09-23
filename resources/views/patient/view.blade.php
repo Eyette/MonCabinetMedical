@@ -45,25 +45,30 @@
                     </div>
                     <div class="col-md-8 col-sm-6">
                       <ul class="nav nav-tabs" id="myTab" role="tablist">
+                      @if(!auth()->user()->isPatient)
                         <li class="nav-item" role="presentation">
-                          <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="Profile" aria-selected="true">{{ __('sentence.Health History') }}</a>
+                          <a class="nav-link {{auth()->user()->isPatient ? '' : 'active'}}" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="Profile" aria-selected="true">{{ __('sentence.Health History') }}</a>
                         </li>
                         <li class="nav-item" role="presentation">
                           <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false">Medical Files</a>
                         </li>
+                        @endif
                         <li class="nav-item" role="presentation">
-                          <a class="nav-link" id="appointements-tab" data-toggle="tab" href="#appointements" role="tab" aria-controls="appointements" aria-selected="false">{{ __('sentence.Appointments') }}</a>
+                          <a class="nav-link {{!auth()->user()->isPatient ? '' : 'active'}}" id="appointements-tab" data-toggle="tab" href="#appointements" role="tab" aria-controls="appointements" aria-selected="false">{{ __('sentence.Appointments') }}</a>
                         </li>
+                        @if(!auth()->user()->isPatient)
                         <li class="nav-item" role="presentation">
                           <a class="nav-link" id="prescriptions-tab" data-toggle="tab" href="#prescriptions" role="tab" aria-controls="prescriptions" aria-selected="false">{{ __('sentence.Prescriptions') }}</a>
                         </li>
-                        
+                        @endif
+
                         <li class="nav-item" role="presentation">
                           <a class="nav-link" id="Billing-tab" data-toggle="tab" href="#Billing" role="tab" aria-controls="Billing" aria-selected="false">{{ __('sentence.Payment History') }}</a>
                         </li>
                       </ul>
                       <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                      @if(!auth()->user()->isPatient)
+                        <div class="tab-pane fade  {{auth()->user()->isPatient ? '' : 'show active'}}" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                           <div class="row">
                             <div class="col">
@@ -85,7 +90,9 @@
 
                           
                         </div>
-                        <div class="tab-pane fade" id="appointements" role="tabpanel" aria-labelledby="appointements-tab">
+                        @endif
+                        @if(auth()->user()->isPatient)
+                        <div class="tab-pane fade  {{!auth()->user()->isPatient ? '' : 'show active'}}" id="appointements" role="tabpanel" aria-labelledby="appointements-tab">
                           <div class="row">
                             <div class="col">
                                 <button type="button" class="btn btn-primary btn-sm my-4 float-right" data-toggle="modal" data-target="#NewDocumentModel"><i class="fa fa-plus"></i> {{ __('sentence.New Appointment') }}</button>
@@ -97,7 +104,9 @@
                               <td align="center">{{ __('sentence.Date') }}</td>
                               <td align="center">{{ __('sentence.Time Slot') }}</td>
                               <td align="center">{{ __('sentence.Status') }}</td>
+                              @if(!auth()->user()->isPatient)
                               <td align="center">{{ __('sentence.Actions') }}</td>
+                              @endif
                             </tr>
                             @forelse($appointments as $appointment)
                             <tr>
@@ -119,10 +128,12 @@
                                   </label>
                                 @endif
                               </td>
+                              @if(!auth()->user()->isPatient)
                               <td align="center">
                                 <a data-rdv_id="{{ $appointment->id }}" data-rdv_date="{{ $appointment->date->format('d M Y') }}" data-rdv_time_start="{{ $appointment->time_start }}" data-rdv_time_end="{{ $appointment->time_end }}" data-patient_name="{{ $appointment->User->name }}" class="btn btn-outline-success btn-circle btn-sm" data-toggle="modal" data-target="#EDITRDVModal"><i class="fas fa-check"></i></a>
                                 <a href="{{ url('appointment/delete/'.$appointment->id) }}" class="btn btn-outline-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
                               </td>
+                              @endif
                             </tr>
                             @empty
                             <tr>
@@ -131,7 +142,8 @@
                             @endforelse
                           </table>
                         </div>
-
+                        @endif
+                         @if(!auth()->user()->isPatient)
                         <div class="tab-pane fade" id="prescriptions" role="tabpanel" aria-labelledby="prescriptions-tab">
                           <div class="row">
                             <div class="col">
@@ -192,6 +204,7 @@
                                   <h5 class="card-title">{{ $document->title }}</h5>
                                   <p class="font-size-12">{{ $document->note }}</p>
                                   <p class="font-size-11"><label class="badge badge-primary-soft">{{ $document->created_at }}</label></p>
+
                                   <a href="{{ url('/uploads/'.$document->file) }}" class="btn btn-primary btn-sm" download><i class="fa fa-cloud-download-alt"></i> Download</a>
                                   <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#DeleteModal" data-link="{{ url('document/delete/'.$document->id) }}"><i class="fa fa-trash"></i></a>
                                 </div>
@@ -206,7 +219,7 @@
 
                             </div>
                         </div>
-
+                        @endif
 
                         <div class="tab-pane fade" id="Billing" role="tabpanel" aria-labelledby="Billing-tab">
                           <div class="row mt-4">
@@ -236,9 +249,11 @@
                             </div>
                           </div>
                           <div class="row">
+                          @if(!auth()->user()->isPatient)
                             <div class="col">
                                 <a type="button" class="btn btn-primary btn-sm my-4 float-right" href="{{ route('billing.create') }}"><i class="fa fa-plus"></i> {{ __('sentence.Create Invoice') }}</a>
                             </div>
+                            @endif
                           </div>
                           <table class="table">
                             <tr>
@@ -250,6 +265,7 @@
                             </tr>
                             @forelse($invoices as $invoice)
                             <tr>
+                              
                               <td><a href="{{ url('billing/view/'.$invoice->id) }}">{{ $invoice->reference }}</a></td>
                               <td><label class="badge badge-primary-soft">{{ $invoice->created_at->format('d M Y') }}</label></td>
                               <td> {{ $invoice->total_with_tax }} {{ App\Setting::get_option('currency') }}
@@ -276,9 +292,10 @@
                               </td>
                               <td>
                                 <a href="{{ url('billing/view/'.$invoice->id) }}" class="btn btn-outline-success btn-circle btn-sm"><i class="fa fa-eye"></i></a>
-                                <a href="{{ url('billing/pdf/'.$invoice->id) }}" class="btn btn-outline-primary btn-circle btn-sm"><i class="fas fa-print"></i></a>
+                                 @if(!auth()->user()->isPatient)
                                 <a href="{{ url('billing/edit/'.$invoice->id) }}" class="btn btn-outline-warning btn-circle btn-sm"><i class="fas fa-pen"></i></a>
                                 <a href="{{ url('billing/delete/'.$invoice->id) }}" class="btn btn-outline-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
+                                @endif
                               </td>
                             </tr>
                             @empty

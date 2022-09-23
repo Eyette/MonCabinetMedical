@@ -4,7 +4,7 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-
+ 
 
     <div class="row justify-content-center">                  
 

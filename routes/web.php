@@ -30,6 +30,7 @@ Route::post('/patient/create', 'PatientController@store')->name('patient.store')
 Route::get('/patient/all', 'PatientController@all')->name('patient.all');
 Route::get('/patient/view/{id}', 'PatientController@view')->where('id', '[0-9]+')->name('patient.view');
 Route::get('/patient/edit/{id}', 'PatientController@edit')->where('id', '[0-9]+')->name('patient.edit');
+Route::get('/patient/delete/{id}', 'PatientController@delete')->where('id', '[0-9]+')->name('patient.delete');
 Route::post('/patient/edit', 'PatientController@store_edit')->name('patient.store_edit');
 
 //Documents
@@ -89,9 +90,9 @@ Route::get('/billing/edit/{id}','BillingController@edit')->where('id', '[0-9]+')
 Route::post('/billing/update', 'BillingController@update')->name('billing.update');
 
 //Settings
-/* Doctorino Settings */
-Route::get('/settings/doctorino_settings', 'SettingController@doctorino_settings')->name('doctorino_settings.edit');
-Route::post('/settings/doctorino_settings', 'SettingController@doctorino_settings_store')->name('doctorino_settings.store');
+/* Allo Cabinet Settings */
+Route::get('/settings/settings', 'SettingController@settings')->name('settings.edit');
+Route::post('/settings/settings', 'SettingController@settings_store')->name('settings.store');
 /* Prescription Settings */
 Route::get('/settings/prescription_settings', 'SettingController@prescription_settings')->name('prescription_settings.edit');
 Route::post('/settings/prescription_settings', 'SettingController@prescription_settings_store')->name('prescription_settings.store');

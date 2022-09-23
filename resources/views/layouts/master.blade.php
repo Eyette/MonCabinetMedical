@@ -9,7 +9,7 @@
       <!-- CSRF Token -->
       <meta name="csrf-token" content="{{ csrf_token() }}">
       <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
-      <title>Doctorino - @yield('title') </title>
+      <title>Allo Cabinet - @yield('title') </title>
       <!-- Custom styles for this template-->
     <!-- Custom fonts for this template-->
     <link href="{{ asset('dashboard/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -38,16 +38,19 @@
                   <div class="sidebar-brand-icon rotate-n-15">
                      <i class="fas fa-user-md"></i>
                   </div>
-                  <div class="sidebar-brand-text mx-3">Doctorino <sup>3.0</sup></div>
+                  <div class="sidebar-brand-text mx-3">Allo Cabinet</div>
                </a>
                <!-- Divider -->
                <hr class="sidebar-divider my-0">
                <!-- Nav Item - Dashboard -->
+               @if(auth()->user()->isDoctor)
                <li class="nav-item active">
                   <a class="nav-link" href="{{ route('home') }}">
                   <i class="fas fa-fw fa-tachometer-alt"></i>
                   <span>{{ __('sentence.Dashboard') }}</span></a>
                </li>
+               @endif
+               @if(auth()->user()->isSecretary || auth()->user()->isDoctor  || auth()->user()->isPatient)
                <!-- Divider -->
                <hr class="sidebar-divider">
                <!-- Heading -->
@@ -62,17 +65,27 @@
                   </a>
                   <div id="collapsePatient" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                      <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('patient.create') }}">{{ __('sentence.New Patient') }}</a>
+                        @if(auth()->user()->isSecretary || auth()->user()->isDoctor)
+                         <a class="collapse-item" href="{{ route('patient.create') }}">{{ __('sentence.New Patient') }}</a>
+                     
                         <a class="collapse-item" href="{{ route('patient.all') }}">{{ __('sentence.All Patients') }}</a>
+
+                        @endif
+                        @if(auth()->user()->isPatient)
+                        <a class="collapse-item" href="{{ route('patient.view',auth()->user()->id) }}"> Mon Profile</a>
+                        @endif
                      </div>
                   </div>
                </li>
+               @endif
+               @if(auth()->user()->isSecretary || auth()->user()->isDoctor  || auth()->user()->isPatient)
                <!-- Divider -->
                <hr class="sidebar-divider">
                <!-- Heading -->
                <div class="sidebar-heading">
                   {{ __('sentence.Appointment') }}
                </div>
+           
                <!-- Nav Item - Pages Collapse Menu -->
                <li class="nav-item">
                   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAppointment" aria-expanded="true" aria-controls="collapseAppointment">
@@ -82,17 +95,20 @@
                   <div id="collapseAppointment" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                      <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('appointment.create') }}">{{ __('sentence.New Appointment') }}</a>
-                        <a class="collapse-item" href="{{ route('appointment.pending') }}">{{ __('sentence.Pending Appointments') }}</a>
-                        <a class="collapse-item" href="{{ route('appointment.all') }}">{{ __('sentence.All Appointments') }}</a>
+                       <!-- <a class="collapse-item" href="{{ route('appointment.pending') }}">{{ __('sentence.Pending Appointments') }}</a>-->
+                        <a class="collapse-item" href="{{ route('appointment.all') }}"> @if(auth()->user()->isPatient)   Mes Rendez-vous   @else {{ __('sentence.All Appointments') }} @endif</a>
                      </div>
                   </div>
                </li>
+               @endif
+               @if(auth()->user()->isDoctor)
                <!-- Divider -->
                <hr class="sidebar-divider">
                <!-- Heading -->
                <div class="sidebar-heading">
                   {{ __('sentence.Prescriptions') }}
                </div>
+            
                <!-- Nav Item - Pages Collapse Menu -->
                <li class="nav-item">
                   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -106,6 +122,7 @@
                      </div>
                   </div>
                </li>
+            
                <!-- Nav Item - Pages Collapse Menu -->
                <li class="nav-item">
                   <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
@@ -119,25 +136,18 @@
                      </div>
                   </div>
                </li>
-               <!-- Nav Item - Pages Collapse Menu -->
-               <li class="nav-item">
-                  <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTests" aria-expanded="true" aria-controls="collapseTests">
-                  <i class="fas fa-fw fa-heartbeat"></i>
-                  <span>{{ __('sentence.Tests') }}</span>
-                  </a>
-                  <div id="collapseTests" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('test.create') }}">{{ __('sentence.Add Test') }}</a>
-                        <a class="collapse-item" href="{{ route('test.all') }}">{{ __('sentence.All Tests') }}</a>
-                     </div>
-                  </div>
-               </li>
+              
+              
+              
+                @endif
+               @if(auth()->user()->isSecretary || auth()->user()->isPatient)
                <!-- Divider -->
                <hr class="sidebar-divider">
                <!-- Heading -->
                <div class="sidebar-heading">
                   {{ __('sentence.Billing') }}
                </div>
+        
                <!-- Nav Item - Utilities Collapse Menu -->
                <li class="nav-item">
                   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
@@ -146,17 +156,22 @@
                   </a>
                   <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                      <div class="bg-white py-2 collapse-inner rounded">
+                     @if(!auth()->user()->isPatient)
                         <a class="collapse-item" href="{{ route('billing.create') }}">{{ __('sentence.Create Invoice') }}</a>
-                        <a class="collapse-item" href="{{ route('billing.all') }}">{{ __('sentence.Billing List') }}</a>
+                       @endif
+                        <a class="collapse-item" href="{{ route('billing.all') }}">  @if(!auth()->user()->isPatient){{ __('sentence.Billing List') }}@else Mes factures @endif</a>
                      </div>
                   </div>
                </li>
+                @endif
+                @if(auth()->user()->isDoctor)
                <!-- Divider -->
                <hr class="sidebar-divider">
                <!-- Heading -->
                <div class="sidebar-heading">
                   {{ __('sentence.Settings') }}
                </div>
+           
                <!-- Nav Item - Pages Collapse Menu -->
                <li class="nav-item">
                   <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseSettings" aria-expanded="true" aria-controls="collapseSettings">
@@ -165,9 +180,9 @@
                   </a>
                   <div id="collapseSettings" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                      <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('doctorino_settings.edit') }}">{{ __('sentence.Doctorino Settings') }}</a>
-                        <a class="collapse-item" href="{{ route('prescription_settings.edit') }}">{{ __('sentence.Prescription Settings') }}</a>
-                        <a class="collapse-item" href="{{ route('sms_settings.edit') }}">{{ __('sentence.SMS Gateway Setup') }}</a>
+                        <a class="collapse-item" href="{{ route('settings.edit') }}">Horaire de travail</a>
+                        <!--<a class="collapse-item" href="{{ route('prescription_settings.edit') }}">{{ __('sentence.Prescription Settings') }}</a>
+                         <a class="collapse-item" href="{{ route('sms_settings.edit') }}">{{ __('sentence.SMS Gateway Setup') }}</a> -->  
                      </div>
                   </div>
                </li>
@@ -177,6 +192,7 @@
                <div class="text-center d-none d-md-inline">
                   <button class="rounded-circle border-0" id="sidebarToggle"></button>
                </div>
+               @endif
             </ul>
             <!-- End of Sidebar -->
             <!-- Content Wrapper -->
@@ -189,18 +205,7 @@
                      <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                      <i class="fa fa-bars"></i>
                      </button>
-                     <div class="dropdown shortcut-menu mr-4">
-                       <button type="button" class="btn btn-primary brd-20 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                         Create as new</button>
-                       <div class="dropdown-menu shadow">
-                              <a class="dropdown-item" href="{{ route('prescription.create') }}">Prescription</a>
-                              <a class="dropdown-item" href="{{ route('patient.create') }}">Patient</a>
-                              <a class="dropdown-item" href="{{ route('appointment.create') }}">Appointment</a>
-                              <a class="dropdown-item" href="{{ route('billing.create') }}">Invoice</a>
-                              <a class="dropdown-item" href="{{ route('drug.create') }}">Drug</a>
-                              <a class="dropdown-item" href="{{ route('test.create') }}">Diagnosis Test</a>
-                       </div>
-                     </div>
+                    
                      <!-- Topbar Navbar -->
                      <ul class="navbar-nav ml-auto">
                         <!-- Nav Item - User Information -->
@@ -211,7 +216,7 @@
                            </a>
                            <!-- Dropdown - User Information -->
                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                              <a class="dropdown-item" href="{{ route('doctorino_settings.edit') }}">
+                              <a class="dropdown-item" href="{{ route('settings.edit') }}">
                               <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                               {{ __('sentence.Settings') }}
                               </a>
@@ -251,9 +256,8 @@
                <footer class="sticky-footer bg-white">
                   <div class="container my-auto">
                      <div class="copyright my-auto">
-                        <span>Copyright &copy; Created by <a href="https://getdoctorino.papasimo.online/"> Digit94Team</a> {{ date('Y') }}</span>
-                        <span style="float: right;">Version 2.0</span>
-                     </div>
+                        <span>Copyright &copy;   {{ date('Y') }}</span>
+                      </div>
                   </div>
                </footer>
                <!-- End of Footer -->

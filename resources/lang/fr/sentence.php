@@ -71,7 +71,7 @@ return [
   'Test Created Successfully' => 'Test crée avec succès!',
   'Test Edited Successfully' => 'Test mis à jour avec succès!',
   'Settings' => 'Paramètres',
-  'Doctorino Settings' => 'Paramètres Doctorino',
+  'Allo Cabinet Settings' => 'Paramètres Allo Cabinet',
   'Prescription Settings' => 'Paramètres Ordonnances',
   'Search for' => 'Recherche',
   'Notifications' => 'Notifications',

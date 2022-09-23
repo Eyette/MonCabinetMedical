@@ -49,4 +49,25 @@ class User extends Authenticatable
     {
         return strtoupper($value);
     }
+
+
+    public function getIsDoctorAttribute($value)
+    {
+        return $this->role === 'doctor';
+    }
+
+
+    public function getIsSecretaryAttribute($value)
+    {
+        return $this->role === 'secretary';
+    }
+
+
+    public function getIsPatientAttribute($value)
+    {
+        return $this->role === 'patient';
+    }
+
+
+
 }

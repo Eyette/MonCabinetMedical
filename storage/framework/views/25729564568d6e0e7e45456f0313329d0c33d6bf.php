@@ -1,5 +1,5 @@
 <?php $__env->startSection('title'); ?>
-<?php echo e(__('sentence.Doctorino Settings')); ?>
+<?php echo e(__('sentence.Allo Cabinet Settings')); ?>
 
 <?php $__env->stopSection(); ?>
 
